@@ -56,6 +56,9 @@ import { useQuery } from "convex/react";
                   <div className="text-right">
                     <p className="text-xl font-bold text-green-600 dark:text-green-500">${receipt.invoiceTotal.toFixed(2)}</p>
                   </div>
+                  <div className="text-right align-text-bottom">
+                    <p className="text-l font-bold text-red-600 dark:text-red-500">Delete</p>
+                  </div>
                 </div>
                 
                 {receipt.images.length > 0 && (
