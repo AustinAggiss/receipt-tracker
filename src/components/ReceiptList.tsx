@@ -73,13 +73,13 @@ import { useQuery } from "convex/react";
                         </div>
                       ))}
                     </div>
+                    <div className="text-right align-text-bottom">
+                    <p className="text-l font-bold text-red-600 dark:text-red-500">Delete</p>
+                    </div>
                   </div>
                 )}
               </div>
             ))}
-            <div className="text-right align-text-bottom">
-                    <p className="text-l font-bold text-red-600 dark:text-red-500">Delete</p>
-            </div>
           </div>
         </div>
       );
