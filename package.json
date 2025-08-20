@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "@convex-dev/auth": "^0.0.80",
+    "@vercel/analytics": "^1.5.0",
+    "@vercel/speed-insights": "^1.2.0",
     "clsx": "^2.1.1",
     "convex": "^1.24.2",
     "jose": "^6.0.12",
