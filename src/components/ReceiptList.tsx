@@ -59,7 +59,7 @@ import { useQuery } from "convex/react";
                 </div>
                 
                 {receipt.images.length > 0 && (
-                  <div className="mt-4">
+                  <div className="mt-4 group">
                     <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Receipt Images:</h4>
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
                       {receipt.images.map((image, index) => (
@@ -73,8 +73,8 @@ import { useQuery } from "convex/react";
                         </div>
                       ))}
                     </div>
-                    <div className="text-right align-text-bottom">
-                    <p className="text-l font-bold text-red-600 dark:text-red-500">Delete</p>
+                    <div className="hidden group-hover:block text-right align-text-bottom">
+                      <p className="text-l font-bold text-red-600 dark:text-red-500">Delete</p>
                     </div>
                   </div>
                 )}
