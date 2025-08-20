@@ -74,7 +74,7 @@ import { useQuery } from "convex/react";
                       ))}
                     </div>
                     <div className="hidden group-hover:block text-right align-text-bottom transition-all duration-300 ease-in-out">
-                      <button className="px-4 py-2 rounded-lg text-l font-bold bg-red-600 hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600 bg-opacity-85">Delete</button>
+                      <button className="text-gray-100 px-4 py-2 rounded-lg text-l bg-red-600 hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600 bg-opacity-85">Delete</button>
                     </div>
                   </div>
                 )}
