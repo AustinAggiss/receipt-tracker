@@ -9,11 +9,15 @@ import { useState } from "react";
     import { ThemeProvider } from "./components/ThemeProvider";
     import { ThemeToggle } from "./components/ThemeToggle";
     import { ThemedSignOutButton } from "./components/ThemedSignOutButton";
+    import { Analytics } from "@vercel/analytics/react"
+    import { SpeedInsights } from "@vercel/speed-insights/react"
 
     export default function App() {
       return (
         <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
           <AppContent />
+          <Analytics />
+          <SpeedInsights />
         </ThemeProvider>
       );
     }

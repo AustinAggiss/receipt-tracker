@@ -3,15 +3,11 @@ import { ConvexAuthProvider } from "@convex-dev/auth/react";
 import { ConvexReactClient } from "convex/react";
 import "./index.css";
 import App from "./App";
-import { Analytics } from "@vercel/analytics/react"
-import { SpeedInsights } from "@vercel/speed-insights/react"
 
 const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL as string);
 
 createRoot(document.getElementById("root")!).render(
   <ConvexAuthProvider client={convex}>
     <App />
-    <Analytics />
-    <SpeedInsights />
   </ConvexAuthProvider>,
 );
