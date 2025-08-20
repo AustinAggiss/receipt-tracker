@@ -45,7 +45,7 @@ import { useQuery } from "convex/react";
             {searchQuery ? `Search Results (${receipts.length})` : `All Receipts (${receipts.length})`}
           </h2>
           
-          <div className="grid gap-4">
+          <div className="grid gap-4 group transition-all duration-300 ease-in-out">
             {receipts.map((receipt) => (
               <div key={receipt._id} className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border dark:border-gray-700 p-4">
                 <div className="flex justify-between items-start mb-3">
@@ -59,7 +59,7 @@ import { useQuery } from "convex/react";
                 </div>
                 
                 {receipt.images.length > 0 && (
-                  <div className="mt-4 group">
+                  <div className="mt-4">
                     <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Receipt Images:</h4>
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
                       {receipt.images.map((image, index) => (
@@ -74,7 +74,7 @@ import { useQuery } from "convex/react";
                       ))}
                     </div>
                     <div className="hidden group-hover:block text-right align-text-bottom">
-                      <p className="text-l font-bold text-red-600 dark:text-red-500">Delete</p>
+                      <button className="text-l font-bold bg-opacity-90 bg-red-600 dark:bg-red-500">Delete</button>
                     </div>
                   </div>
                 )}
