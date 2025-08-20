@@ -14,6 +14,7 @@
     "@convex-dev/auth": "^0.0.80",
     "clsx": "^2.1.1",
     "convex": "^1.24.2",
+    "jose": "^6.0.12",
     "lucide-react": "^0.540.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
