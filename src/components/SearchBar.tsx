@@ -117,7 +117,7 @@ export function SearchBar({ searchQuery, onSearchChange }: SearchBarProps) {
       </div>
 
       {showDatePicker && (
-        <div className="absolute right-0 mt-12 z-10 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-3 shadow">
+        <div className="absolute z-10 right-0 mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg p-3">
           <label className="sr-only">Filter by date</label>
           <div className="flex items-center gap-2">
             <input
@@ -129,14 +129,14 @@ export function SearchBar({ searchQuery, onSearchChange }: SearchBarProps) {
             <button
               type="button"
               onClick={applyDateFilter}
-              className="px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              className="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
             >
               Apply
             </button>
             <button
               type="button"
               onClick={cancelDateFilter}
-              className="px-3 py-2 bg-gray-100 dark:bg-gray-700 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-sm"
+              className="px-3 py-2 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-600 text-sm"
             >
               Cancel
             </button>
