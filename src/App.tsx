@@ -48,7 +48,7 @@ import { useState } from "react";
                   <p className="text-gray-600 dark:text-gray-400">Sign in to access your receipts</p>
                 </div>
                 <SignInForm />
-              </div>
+              </div>  
             </div>
             <Toaster />
           </div>
