@@ -1,22 +1,49 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface SearchBarProps {
   searchQuery: string;
   onSearchChange: (query: string) => void;
 }
 
+function isISODate(s: string) {
+  return /^\d{4}-\d{2}-\d{2}$/.test(s);
+}
+
 export function SearchBar({ searchQuery, onSearchChange }: SearchBarProps) {
   const [showDatePicker, setShowDatePicker] = useState(false);
+  // local date buffer so picking a date does NOT immediately run the search
+  const [dateValue, setDateValue] = useState("");
+
+  useEffect(() => {
+    // when opening the date picker, prefill with current search if it's a date
+    if (showDatePicker && isISODate(searchQuery)) {
+      setDateValue(searchQuery);
+    }
+  }, [showDatePicker, searchQuery]);
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const date = e.target.value; // YYYY-MM-DD
-    onSearchChange(date);
+    setDateValue(e.target.value); // buffer the picked date
+  };
+
+  const applyDateFilter = () => {
+    if (dateValue) {
+      onSearchChange(dateValue);
+    } else {
+      // if user cleared the date input and applies, clear search
+      onSearchChange("");
+    }
     setShowDatePicker(false);
+  };
+
+  const cancelDateFilter = () => {
+    setShowDatePicker(false);
+    setDateValue("");
   };
 
   const clearSearch = () => {
     onSearchChange("");
     setShowDatePicker(false);
+    setDateValue("");
   };
 
   return (
@@ -90,13 +117,30 @@ export function SearchBar({ searchQuery, onSearchChange }: SearchBarProps) {
       </div>
 
       {showDatePicker && (
-        <div className="absolute right-0 mt-12 z-10 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-2 shadow">
+        <div className="absolute right-0 mt-12 z-10 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-3 shadow">
           <label className="sr-only">Filter by date</label>
-          <input
-            type="date"
-            onChange={handleDateChange}
-            className="px-3 py-2 rounded border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-700 outline-none"
-          />
+          <div className="flex items-center gap-2">
+            <input
+              type="date"
+              value={dateValue}
+              onChange={handleDateChange}
+              className="px-3 py-2 rounded border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-700 outline-none"
+            />
+            <button
+              type="button"
+              onClick={applyDateFilter}
+              className="px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            >
+              Apply
+            </button>
+            <button
+              type="button"
+              onClick={cancelDateFilter}
+              className="px-3 py-2 bg-gray-100 dark:bg-gray-700 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-sm"
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       )}
     </div>
