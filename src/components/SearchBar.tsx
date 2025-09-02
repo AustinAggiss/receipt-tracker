@@ -124,7 +124,7 @@ export function SearchBar({ searchQuery, onSearchChange }: SearchBarProps) {
               type="date"
               value={dateValue}
               onChange={handleDateChange}
-              className="px-3 py-2 rounded border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-700 outline-none"
+              className="w-full px-3 py-2 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-700 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
             />
             <button
               type="button"
