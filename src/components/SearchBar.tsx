@@ -11,6 +11,17 @@ function isISODate(s: string) {
   return /^\d{4}-\d{2}-\d{2}$/.test(s);
 }
 
+function formatReadableDate(iso?: string) {
+  if (!iso) return "";
+  try {
+    const d = new Date(iso);
+    // fallback to the raw iso string if invalid
+    return isNaN(d.getTime()) ? iso : d.toLocaleDateString();
+  } catch {
+    return iso;
+  }
+}
+
 export function SearchBar({ searchQuery, onSearchChange, dateFilter = "", onDateFilterChange }: SearchBarProps) {
   const [showDatePicker, setShowDatePicker] = useState(false);
   // local date buffer so picking a date does NOT immediately run the search
@@ -78,11 +89,27 @@ export function SearchBar({ searchQuery, onSearchChange, dateFilter = "", onDate
 
       {/* Right-side controls: date toggle + clear */}
       <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex items-center gap-2">
+        {/* Active date pill */}
+        {dateFilter ? (
+          <div className="flex items-center gap-2 px-2 py-1 bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-700 rounded-full text-sm text-gray-700 dark:text-gray-200">
+            <span>{formatReadableDate(dateFilter)}</span>
+            <button
+              type="button"
+              aria-label="Clear date filter"
+              onClick={() => onDateFilterChange?.("")}
+              className="flex items-center justify-center w-6 h-6 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-600 dark:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        ) : null}
         <button
           type="button"
           title="Filter by date"
           onClick={() => setShowDatePicker((s) => !s)}
-          className="p-1 rounded bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600"
+          className={`p-1 rounded ${dateFilter ? "bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-300" : "bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-200"} hover:bg-gray-200 dark:hover:bg-gray-600`}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
