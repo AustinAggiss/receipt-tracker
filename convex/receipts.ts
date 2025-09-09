@@ -57,7 +57,7 @@ export const create = mutation({
 });
 
 export const search = query({
-  args: { query: v.string() },
+  args: { query: v.optional(v.string()), date: v.optional(v.string()) },
   handler: async (ctx, args) => {
     const userId = await getAuthUserId(ctx);
     if (!userId) {
@@ -69,26 +69,31 @@ export const search = query({
       .filter((q) => q.eq(q.field("userId"), userId))
       .collect();
     
-    const searchQuery = args.query.toLowerCase();
+    const searchQuery = (args.query || "").toLowerCase();
+    const dateFilter = args.date || "";
     const filteredReceipts = [];
-    
+
     for (const receipt of receipts) {
+      // If a date filter is provided, require an exact match
+      if (dateFilter && receipt.purchaseDate !== dateFilter) continue;
+
       const merchant = await ctx.db.get(receipt.merchantId);
       const merchantName = merchant?.name || "";
-      
-      // Search by merchant name, date, or total
-      const matchesMerchant = merchantName.toLowerCase().includes(searchQuery);
-      const matchesDate = receipt.purchaseDate.includes(searchQuery);
-      const matchesTotal = receipt.invoiceTotal.toString().includes(searchQuery);
-      
-      if (matchesMerchant || matchesDate || matchesTotal) {
+
+      // If a text query is provided, require the text to match merchant, date, or total
+      const matchesText = !searchQuery ||
+        merchantName.toLowerCase().includes(searchQuery) ||
+        receipt.purchaseDate.includes(searchQuery) ||
+        receipt.invoiceTotal.toString().includes(searchQuery);
+
+      if (matchesText) {
         const imageUrls = await Promise.all(
           receipt.imageIds.map(async (imageId) => {
             const url = await ctx.storage.getUrl(imageId);
             return { id: imageId, url };
           })
         );
-        
+
         filteredReceipts.push({
           ...receipt,
           merchant: merchantName,
@@ -96,8 +101,8 @@ export const search = query({
         });
       }
     }
-    
-    return filteredReceipts.sort((a, b) => 
+
+    return filteredReceipts.sort((a, b) =>
       new Date(b.purchaseDate).getTime() - new Date(a.purchaseDate).getTime()
     );
   },

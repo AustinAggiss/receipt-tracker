@@ -3,34 +3,40 @@ import { useState, useEffect } from "react";
 interface SearchBarProps {
   searchQuery: string;
   onSearchChange: (query: string) => void;
+  dateFilter?: string;
+  onDateFilterChange?: (date: string) => void;
 }
 
 function isISODate(s: string) {
   return /^\d{4}-\d{2}-\d{2}$/.test(s);
 }
 
-export function SearchBar({ searchQuery, onSearchChange }: SearchBarProps) {
+export function SearchBar({ searchQuery, onSearchChange, dateFilter = "", onDateFilterChange }: SearchBarProps) {
   const [showDatePicker, setShowDatePicker] = useState(false);
   // local date buffer so picking a date does NOT immediately run the search
   const [dateValue, setDateValue] = useState("");
 
   useEffect(() => {
-    // when opening the date picker, prefill with current search if it's a date
-    if (showDatePicker && isISODate(searchQuery)) {
-      setDateValue(searchQuery);
+    // when opening the date picker, prefer the explicit dateFilter; fallback to searchQuery if it looks like a date
+    if (showDatePicker) {
+      if (dateFilter && isISODate(dateFilter)) {
+        setDateValue(dateFilter);
+      } else if (isISODate(searchQuery)) {
+        setDateValue(searchQuery);
+      } else {
+        setDateValue("");
+      }
     }
-  }, [showDatePicker, searchQuery]);
+  }, [showDatePicker, searchQuery, dateFilter]);
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDateValue(e.target.value); // buffer the picked date
   };
 
   const applyDateFilter = () => {
-    if (dateValue) {
-      onSearchChange(dateValue);
-    } else {
-      // if user cleared the date input and applies, clear search
-      onSearchChange("");
+    // apply date alongside the existing text query
+    if (onDateFilterChange) {
+      onDateFilterChange(dateValue || "");
     }
     setShowDatePicker(false);
   };
@@ -42,6 +48,7 @@ export function SearchBar({ searchQuery, onSearchChange }: SearchBarProps) {
 
   const clearSearch = () => {
     onSearchChange("");
+    if (onDateFilterChange) onDateFilterChange("");
     setShowDatePicker(false);
     setDateValue("");
   };
@@ -50,7 +57,7 @@ export function SearchBar({ searchQuery, onSearchChange }: SearchBarProps) {
     <div className="relative">
       <input
         type="text"
-        placeholder="Search receipts by merchant, date, or amount..."
+        placeholder="Search by merchant, date, or amount..."
         value={searchQuery}
         onChange={(e) => onSearchChange(e.target.value)}
         className="w-full px-4 py-3 pl-10 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
