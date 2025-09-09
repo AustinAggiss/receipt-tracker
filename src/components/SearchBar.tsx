@@ -136,7 +136,7 @@ export function SearchBar({ searchQuery, onSearchChange }: SearchBarProps) {
             <button
               type="button"
               onClick={cancelDateFilter}
-              className="px-3 py-2 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-600 text-sm"
+              className="px-3 py-2 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
             >
               Cancel
             </button>
