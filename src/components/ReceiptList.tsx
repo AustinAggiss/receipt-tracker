@@ -17,7 +17,7 @@ export function ReceiptList({ searchQuery, dateFilter = "" }: ReceiptListProps) 
   if (receipts === undefined) {
     return (
       <div className="flex justify-center items-center py-8">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+        <div className="w-12 h-12 border-4 border-dashed rounded-full animate-spin border-blue-600 dark:border-blue-500"></div>
       </div>
     );
   }
