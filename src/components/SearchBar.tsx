@@ -91,7 +91,7 @@ export function SearchBar({ searchQuery, onSearchChange, dateFilter = "", onDate
       <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex items-center gap-2">
         {/* Active date pill */}
         {dateFilter ? (
-          <div className="flex items-center gap-2 px-2 py-1 bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-700 rounded-full text-sm text-gray-700 dark:text-gray-200">
+          <div className="flex items-center gap-2 px-2 py-1 bg-gray-100 dark:bg-blue-900/30 border border-gray-200 dark:border-gray-700 rounded-full text-sm text-gray-700 dark:text-gray-200">
             <span>{formatReadableDate(dateFilter)}</span>
             <button
               type="button"
