@@ -31,10 +31,10 @@ export function ReceiptList({ searchQuery, dateFilter = "" }: ReceiptListProps) 
           </svg>
         </div>
         <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-1">
-          {searchQuery ? "No receipts found" : "No receipts yet"}
+          {shouldSearch ? "No receipts found" : "No receipts yet"}
         </h3>
         <p className="text-gray-500 dark:text-gray-400">
-          {searchQuery ? "Try adjusting your search terms" : "Add your first receipt to get started"}
+          {shouldSearch ? "Try adjusting your search terms" : "Add your first receipt to get started"}
         </p>
       </div>
     );
@@ -43,7 +43,7 @@ export function ReceiptList({ searchQuery, dateFilter = "" }: ReceiptListProps) 
   return (
     <div className="space-y-4">
       <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-        {searchQuery ? `Search Results (${receipts.length})` : `All Receipts (${receipts.length})`}
+        {shouldSearch ? `Search Results (${receipts.length})` : `All Receipts (${receipts.length})`}
       </h2>
       
       <div className="grid gap-4 group transition-all duration-300 ease-in-out">
